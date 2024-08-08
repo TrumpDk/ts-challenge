@@ -8,6 +8,10 @@ type cases = [
   Expect<Equal<LengthOfString<'Sound! Euphonium'>, 16>>,
 ]
 
-
 // ============= Your Code Here =============
-type LengthOfString<S extends string> = any
+// convert string to array as 'property' only exists on array object
+// there is no rest operator for string in ts?
+
+type ConvertStringToArray<S extends string> = S extends `${infer first}${infer remaining}` ? [first, ...ConvertStringToArray<remaining>] : []
+
+type LengthOfString<S extends string> =  ConvertStringToArray<S>['length']

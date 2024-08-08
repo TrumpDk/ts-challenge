@@ -14,4 +14,8 @@ type cases = [
 
 // ============= Your Code Here =============
 // https://github.com/type-challenges/type-challenges/issues/30381
-type TrimLeft<S extends string> = any
+
+type matcher = ' ' | '\n' | '\t'
+
+// recursively resolve each single string
+type TrimLeft<S extends string> = S extends `${matcher}${infer U}` ? TrimLeft<U> : S

@@ -22,4 +22,5 @@ type cases = [
 
 // ============= Your Code Here =============
 // https://github.com/type-challenges/type-challenges/issues/75
-type LookUp<U, T> = U[key in keyof U]
+// evaluated distributively, what is called evaluated distributively
+type LookUp<U, T extends string> = { [K in T]: U extends { type: T } ? U : never }[T]
