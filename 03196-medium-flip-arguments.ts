@@ -20,4 +20,12 @@ type errors = [
 
 
 // ============= Your Code Here =============
-type FlipArguments<T> = any
+// use array to reverse the arguments
+// a tuple array can be converted to a tuple type when it is used as a type annotation in a function
+type Reverse<T extends any[]> = T extends [infer Head, ...infer Tail] ? [...Reverse<Tail>, Head] : []
+type FlipArguments<T> = T extends (...args: infer Args) => infer R ? (...args: Reverse<Args>) => R : never
+
+// type Test<T> = T extends (...args: infer Args) => infer R ? Args : never;
+// type test = Test<(foo: string, bar: number) => boolean>
+// type test2 = Reverse<test>
+// type test3 = (...args: test2) => boolean
